@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Freelance Operating System: Land Your First Client</title>
+<title>The Client Radar: Land Your First Client</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -39,6 +39,8 @@
   .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
   .container--wide { max-width: 980px; margin: 0 auto; padding: 0 24px; }
   section { padding: 80px 0; }
+
+  img { max-width: 100%; display: block; }
 
   /* NAV */
   nav {
@@ -76,7 +78,27 @@
   .nav-menu-list a:hover { background: var(--warm-mid); color: var(--accent); }
 
   /* HERO / OPENING */
-  .hero { padding: 90px 0 70px; border-bottom: 1px solid var(--warm-mid); }
+  .hero {
+    position: relative;
+    padding: 90px 0 70px;
+    border-bottom: 1px solid var(--warm-mid);
+    overflow: hidden;
+  }
+  .hero-bg-image {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.08;
+    z-index: 0;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+    background: linear-gradient(180deg, var(--paper) 0%, rgba(250,248,244,0.9) 60%, var(--paper) 100%);
+    z-index: 1;
+  }
+  .hero .container { position: relative; z-index: 2; }
   .hero-eyebrow {
     display: inline-block; font-size: 0.78rem; font-weight: 600;
     letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
@@ -84,14 +106,8 @@
     border: 1px solid var(--accent-light); border-radius: 100px;
     background: var(--accent-light);
   }
-  .hero-headline { font-size: clamp(2.1rem, 5vw, 3.4rem); margin-bottom: 28px; }
-  .hero-body { font-size: 1.03rem; color: var(--muted); line-height: 1.85; }
-  .hero-body:last-of-type { margin-bottom: 0; }
-  .hero-closer {
-    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
-    font-size: clamp(1.15rem, 2.2vw, 1.45rem); color: var(--ink);
-    line-height: 1.5; margin-top: 32px;
-  }
+  .hero-headline { font-size: clamp(2.1rem, 5vw, 3.4rem); margin-bottom: 20px; }
+  .hero-subhead { font-size: clamp(1.1rem, 2.2vw, 1.4rem); color: var(--ink); font-weight: 500; line-height: 1.6; margin-bottom: 0; }
 
   /* SECTION LABEL */
   .section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
@@ -99,6 +115,7 @@
   /* THE REAL PROBLEM */
   .problem-section { background: var(--ink); color: var(--white); }
   .problem-section h2 { color: var(--white); margin-bottom: 24px; }
+  .problem-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: center; }
   .problem-highlight {
     border-left: 3px solid var(--accent);
     padding: 22px 28px;
@@ -112,6 +129,8 @@
     font-weight: 300;
     line-height: 1.55;
   }
+  .problem-image { border-radius: 6px; overflow: hidden; }
+  .problem-image img { width: 100%; height: 100%; object-fit: cover; }
 
   /* SOLUTION */
   .solution-section { background: var(--warm-mid); border-top: 1px solid #E0D8CE; border-bottom: 1px solid #E0D8CE; }
@@ -137,6 +156,8 @@
   .choice.highlighted { border-color: var(--accent); background: var(--white); }
   .choice.highlighted .choice-label { color: var(--accent); }
   .choice.highlighted p { color: var(--ink); }
+  .choice-image { margin-top: 16px; border-radius: 4px; overflow: hidden; }
+  .choice-image img { width: 100%; height: 160px; object-fit: cover; }
 
   /* PRODUCTS */
   .products { padding: 90px 0; }
@@ -172,9 +193,23 @@
   .inside-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--warm-mid); margin-bottom: 36px; }
   .inside-card { background: var(--paper); padding: 24px 28px; transition: background 0.2s; }
   .inside-card:hover { background: var(--white); }
+  .inside-card.highlight-card { background: var(--accent-light); }
   .ic-num { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 8px; }
   .ic-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 0.95rem; margin-bottom: 6px; }
   .ic-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.55; }
+
+  .product-side-image { border-radius: 6px; overflow: hidden; margin-bottom: 36px; }
+  .product-side-image img { width: 100%; height: auto; object-fit: cover; }
+
+  .bonus-banner {
+    background: var(--ink); color: var(--white);
+    padding: 22px 28px; border-radius: 6px;
+    text-align: center; margin-bottom: 36px;
+  }
+  .bonus-banner p {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
+    font-size: 1.05rem; color: var(--white); margin-bottom: 0;
+  }
 
   .note-block {
     padding: 24px 28px;
@@ -197,25 +232,27 @@
 
   /* COMPARISON */
   .comparison { background: var(--warm-mid); border-top: 1px solid #E0D8CE; border-bottom: 1px solid #E0D8CE; }
-  .comp-table { display: grid; grid-template-columns: 1.2fr 1fr 1fr; margin-top: 48px; border: 1px solid #E0D8CE; }
-  .comp-header { padding: 22px 24px; border-bottom: 1px solid #E0D8CE; display: flex; flex-direction: column; justify-content: flex-end; }
-  .comp-header.blank { background: transparent; }
+  .comp-scroll { overflow-x: auto; margin-top: 48px; -webkit-overflow-scrolling: touch; }
+  .comp-table { display: grid; grid-template-columns: 160px 1fr 1fr; border: 1px solid #E0D8CE; min-width: 560px; }
+  .comp-header { padding: 22px 20px; border-bottom: 1px solid #E0D8CE; display: flex; flex-direction: column; justify-content: flex-end; }
+  .comp-header.blank { background: var(--warm-mid); position: sticky; left: 0; }
   .comp-header.col-a { background: var(--paper); }
   .comp-header.col-b { background: var(--ink); }
   .comp-tag-sm { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; line-height: 1.4; }
   .comp-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 0.92rem; line-height: 1.3; }
   .comp-price-sm { font-size: 0.78rem; color: var(--accent); font-weight: 600; margin-top: 6px; }
-  .comp-cell { padding: 15px 24px; border-bottom: 1px solid #E0D8CE; font-size: 0.87rem; line-height: 1.5; }
+  .comp-cell { padding: 15px 20px; border-bottom: 1px solid #E0D8CE; font-size: 0.87rem; line-height: 1.5; }
   .comp-cell:last-child { border-bottom: none; }
-  .comp-cell.feat { color: var(--muted); font-size: 0.84rem; background: transparent; }
+  .comp-cell.feat { color: var(--muted); font-size: 0.82rem; background: var(--warm-mid); position: sticky; left: 0; font-weight: 500; }
   .comp-cell.yes { color: var(--accent); font-weight: 600; background: var(--paper); }
   .comp-cell.no { color: #C4BDB7; background: var(--paper); }
   .comp-cell.yes-b { color: var(--accent-light); font-weight: 600; background: rgba(15,13,10,0.97); }
   .comp-cell.price-a { background: var(--paper); font-weight: 700; color: var(--ink); }
   .comp-cell.price-b { background: rgba(15,13,10,0.97); font-weight: 700; color: var(--white); }
+  .comp-hint { font-size: 0.78rem; color: var(--muted); margin-top: 10px; display: none; }
 
   /* WHO */
-  .who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 48px; }
+  .who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 48px; align-items: start; }
   .who-card { padding: 36px; border: 1px solid var(--warm-mid); border-radius: 2px; }
   .who-card.yes { border-left: 4px solid var(--accent); }
   .who-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; color: var(--muted); }
@@ -225,6 +262,8 @@
   .who-list li::before { position: absolute; left: 0; }
   .who-card.yes .who-list li::before { content: '✓'; color: var(--accent); font-weight: 700; }
   .who-card.no .who-list li::before { content: '✕'; color: var(--muted); }
+  .who-image { grid-column: 1 / -1; border-radius: 6px; overflow: hidden; margin-top: 8px; }
+  .who-image img { width: 100%; max-height: 320px; object-fit: cover; }
 
   /* FINAL CTA */
   .final-cta { background: var(--ink); color: var(--white); text-align: center; padding: 110px 0; }
@@ -243,7 +282,6 @@
   .btn-final-orange:hover { background: var(--accent-dark); }
   .btn-secondary-final { display: inline-block; background: var(--accent); color: var(--white); padding: 12px 28px; border-radius: 4px; text-decoration: none; font-weight: 600; font-size: 0.88rem; transition: background 0.2s; margin-top: 8px; }
   .btn-secondary-final:hover { background: var(--accent-dark); }
-  .final-sign { font-size: 0.82rem; color: rgba(255,255,255,0.35); margin-top: 20px; }
 
   /* FOOTER */
   footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.07); padding: 32px 24px; text-align: center; font-size: 0.82rem; color: rgba(255,255,255,0.35); }
@@ -252,15 +290,18 @@
   @media (max-width: 680px) {
     section { padding: 60px 0; }
     .hero { padding: 64px 0 50px; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .problem-image { order: -1; max-height: 220px; }
+    .problem-image img { max-height: 220px; }
     .question-choices { grid-template-columns: 1fr; }
     .product-top { grid-template-columns: 1fr; }
     .product-price-block { text-align: left; }
     .inside-grid { grid-template-columns: 1fr; }
-    .comp-table { grid-template-columns: 1fr; }
-    .comp-header.blank, .comp-cell.feat { display: none; }
     .who-grid { grid-template-columns: 1fr; }
     .final-buttons { flex-direction: column; align-items: center; }
     .product-ctas { flex-direction: column; align-items: flex-start; }
+    .comp-hint { display: block; }
+    .comp-table { min-width: 520px; }
   }
 </style>
 </head>
@@ -274,7 +315,7 @@
     <div class="nav-menu-list">
       <a href="#top">Home</a>
       <a href="#products">The Two Options</a>
-      <a href="#template">Freelance Operating System</a>
+      <a href="#template">The Client Radar</a>
       <a href="#program">The First Yes Program</a>
       <a href="#compare">Compare Plans</a>
       <a href="#who-its-for">Is This For You?</a>
@@ -284,14 +325,11 @@
 
 <!-- OPENING -->
 <section class="hero" id="top">
+  <img src="images/hero-bg.jpeg" alt="" class="hero-bg-image">
   <div class="container">
     <div class="hero-eyebrow">For VAs, Freelancers and 9-5 Escapees</div>
     <h1 class="display hero-headline">How Long Are You Willing to Wait?</h1>
-    <p class="hero-body">Three more months? Six? Another year? Because that's what many Virtual Assistants and remote job seekers are doing right now, waiting.</p>
-    <p class="hero-body">Waiting for a recruiter to reply to their messages, waiting for an interview invitation, waiting for a company to finally give them a chance, waiting for someone else to decide whether they deserve an income.</p>
-    <p class="hero-body">Meanwhile, they're spending hours every day applying for jobs alongside hundreds, sometimes thousands, of other applicants. And when nothing happens, they assume they need another certificate, another course, another CV review, or another application strategy.</p>
-    <p class="hero-body">It's becoming frustrating because you know that you have skills, you have experience, and you are qualified, but you are still not getting hired.</p>
-    <p class="hero-closer">So, if the problem isn't that you're unqualified, then what is it?</p>
+    <p class="hero-subhead">Turn your skills into an income stream and land your first paying client in 90 days.</p>
   </div>
 </section>
 
@@ -300,8 +338,13 @@
   <div class="container">
     <p class="section-label">The real problem</p>
     <h2>It's not that you're unqualified.</h2>
-    <div class="problem-highlight">
-      <p>The problem is that you've built your entire income plan around getting a job and waiting for a monthly salary.</p>
+    <div class="problem-grid">
+      <div class="problem-highlight">
+        <p>The problem is that you've built your entire income plan around getting a job and waiting for a monthly salary.</p>
+      </div>
+      <div class="problem-image">
+        <img src="images/problem.jpeg" alt="Frustrated job seeker at desk">
+      </div>
     </div>
   </div>
 </section>
@@ -309,8 +352,8 @@
 <!-- THE SOLUTION -->
 <section class="solution-section">
   <div class="container">
-    <p class="solution-lead">But what if I told you that you can start your own freelancing business and start making money on your own terms?</p>
-    <p class="solution-body">In case you might be wondering, freelancing means offering your skills to business owners and clients remotely, on your own terms, without being tied to one employer. You work from anywhere, you get paid, and you are your own boss.</p>
+    <p class="solution-lead">But what if I told you that you can work directly with business owners remotely, on your own terms, without being tied to one employer.</p>
+    <p class="solution-body">You work from anywhere, you get paid consistently, and you are your own boss.</p>
     <p class="solution-body">Business owners constantly need support, and they will pay anyone who can step in and help them solve the problems that overwhelm them. You can support business owners remotely with tasks that save them time and help them grow their businesses. This can include email management, scheduling, social media management, customer support, data entry, research, project coordination, and so much more.</p>
     <p class="solution-body">There are so many services you can offer. For example, one of the most in-demand services right now is social media management, where VAs charge anywhere from $300 to $500 per client per month.</p>
     <p class="solution-body">Now imagine landing just one client paying you $300 per month. That's $300 coming in every month from one client. Now imagine having three clients paying the same amount. That's $900 per month.</p>
@@ -331,7 +374,10 @@
       </div>
       <div class="choice highlighted">
         <p class="choice-label">Option B</p>
-        <p>Start your own freelancing business, build a system that creates opportunities for yourself, and stop depending on other people's decisions for your income.</p>
+        <p>Stop waiting for companies to hire you. Start creating opportunities for yourself, attracting clients, and building an income from your skills.</p>
+        <div class="choice-image">
+          <img src="images/optionb.jpeg" alt="Woman building her own life with her laptop, cozy and confident">
+        </div>
       </div>
     </div>
   </div>
@@ -352,11 +398,11 @@
       <div class="product-top">
         <div>
           <span class="product-tag starter">The Starting Point</span>
-          <p class="product-name">The Freelance<br>Operating System</p>
-          <p class="product-desc">If you're ready to stop applying blindly and start building a freelance business, this template gives you the structure. Inside, you'll find the systems, workflows, trackers, and processes designed to help you operate like a freelancer instead of a job applicant. Everything is designed to help you move from confusion to clarity.</p>
+          <p class="product-name">The Client Radar</p>
+          <p class="product-desc">If you're ready to stop applying blindly and start building something for yourself, this system gives you the structure and framework you need to get started. Inside, you'll find the systems, workflows, trackers, and processes designed to help you operate like a freelancer instead of a job applicant. Everything is designed to help you move from confusion to clarity.</p>
         </div>
         <div class="product-price-block">
-          <p class="product-price">$27</p>
+          <p class="product-price">$15</p>
           <p class="product-price-note">Purchase once. Forever yours.</p>
         </div>
       </div>
@@ -368,6 +414,10 @@
         <li>Stay focused on activities that can generate income</li>
         <li>Operate like a freelancer instead of a job applicant</li>
       </ul>
+
+      <div class="product-side-image">
+        <img src="images/product.jpeg" alt="Workspace collage showing planning and remote work">
+      </div>
 
       <div class="inside-grid">
         <div class="inside-card">
@@ -395,10 +445,10 @@
           <p class="ic-title">Weekly Progress Tracker</p>
           <p class="ic-desc">Track your numbers every week. Know if you're on track and exactly what to adjust if you're not.</p>
         </div>
-        <div class="inside-card">
+        <div class="inside-card highlight-card">
           <p class="ic-num">06</p>
-          <p class="ic-title">Portfolio Builder</p>
-          <p class="ic-desc">Build a portfolio before you have a single client. Includes a complete sample case study so you know exactly what a good portfolio project looks like.</p>
+          <p class="ic-title">DRAG &amp; DROP PORTFOLIO</p>
+          <p class="ic-desc">You don't need a website to show off your skills to potential clients. Get a professionally designed customizable portfolio template.</p>
         </div>
         <div class="inside-card">
           <p class="ic-num">07</p>
@@ -422,9 +472,13 @@
         </div>
       </div>
 
+      <div class="bonus-banner">
+        <p>Get ALL of these great resources and more to kick start your journey to your first client!</p>
+      </div>
+
       <div class="product-ctas">
-        <a href="https://selar.com/8407577grg" target="_blank" class="btn-primary">Get The Freelance Operating System, $27</a>
-        <span style="font-size: 0.82rem; color: var(--muted);">Launch price. Goes to $37 after the first 100 buyers.</span>
+        <a href="https://selar.com/8407577grg" target="_blank" class="btn-primary">Get The Client Radar, $15</a>
+        <span style="font-size: 0.82rem; color: var(--muted);">Launch price. Goes to $25 after the first 100 buyers.</span>
       </div>
     </div>
 
@@ -432,14 +486,14 @@
     <div class="product-block" id="program">
       <div class="product-top">
         <div>
-          <span class="product-tag premium">For Serious Starters</span>
+          <span class="product-tag premium">For People Who Need Daily Guidance</span>
           <p class="product-name">The First Yes<br><span style="font-size: 0.75em; opacity: 0.7;">90-Day Accountability Program</span></p>
           <p class="product-desc">Some people don't just need a system. They need daily guidance, accountability, structure, and support. They need someone to show them what to do and how to avoid wasting another six months figuring things out. That's why I created the program.</p>
         </div>
         <div class="product-price-block">
-          <p class="product-price">$75</p>
+          <p class="product-price">$45</p>
           <p class="product-price-note">Full 90-day support.</p>
-          <p class="product-price-note" style="margin-top: 8px;">$75 one-time, or $25/month for 3 months.</p>
+          <p class="product-price-note" style="margin-top: 8px;">$45 one-time, or $15/month for 3 months.</p>
         </div>
       </div>
 
@@ -461,13 +515,17 @@
         <li>Build a repeatable client acquisition process</li>
       </ul>
 
+      <div class="bonus-banner">
+        <p>It's the structure, coaching, support, and weekly accountability that move you from overwhelmed to landing your first client fast.</p>
+      </div>
+
       <div class="note-block">
-        <strong>Note:</strong> Instead of trying random strategies and hoping something works, you'll be guided through a structured path. For people who are serious about landing their first client and know consistency has been their biggest challenge, I would recommend joining the 90-Day Accountability Program. However, if you're not ready for that level of support right now, The Freelance Operating System is still an incredible resource that will give you the structure and tools you need to start building your freelance business.
+        <strong>Note:</strong> For people who are serious about landing their first client and know consistency has been their biggest challenge, I would recommend joining the 90-Day Accountability Program. Instead of trying random strategies and hoping something works, you'll be guided through a structured path. This is not a course or a video tutorial. It is a guided process where I work with you daily, until you start landing clients. However, if you're not ready for that level of support right now, The Client Radar is still an incredible resource that will give you the structure and tools you need to start.
       </div>
 
       <div class="product-ctas">
         <a href="https://docs.google.com/presentation/d/1xNGNPeyY5qatb7_sakJYXSJ14taX8Q7od8o6yv9xFBg/edit?usp=drivesdk" target="_blank" class="btn-primary">Learn more about the program</a>
-        <a href="https://selar.com/4591a5w61n" target="_blank" class="btn-primary">Join the Program →</a>
+        <a href="https://selar.com/4591a5w61n" target="_blank" class="btn-primary">Join The First Yes →</a>
       </div>
     </div>
 
@@ -479,57 +537,56 @@
   <div class="container--wide">
     <div class="container" style="padding: 0;">
       <h2>Not sure which one is right for you?<br>Here's a simple breakdown.</h2>
+      <p class="comp-hint">Swipe sideways to see both options →</p>
     </div>
-    <div class="comp-table">
+    <div class="comp-scroll">
+      <div class="comp-table">
 
-      <div class="comp-header blank"></div>
-      <div class="comp-header col-a">
-        <p class="comp-tag-sm">The Starting Point</p>
-        <p class="comp-name">Freelance Operating System</p>
-        <p class="comp-price-sm">$27</p>
+        <div class="comp-header blank"></div>
+        <div class="comp-header col-a">
+          <p class="comp-tag-sm">The Starting Point</p>
+          <p class="comp-name">The Client Radar</p>
+          <p class="comp-price-sm">$15</p>
+        </div>
+        <div class="comp-header col-b">
+          <p class="comp-tag-sm" style="color: rgba(255,255,255,0.55);">Daily Guidance</p>
+          <p class="comp-name" style="color: var(--white);">The First Yes Program</p>
+          <p class="comp-price-sm" style="color: var(--accent-light);">$45</p>
+        </div>
+
+        <div class="comp-cell feat">Complete operating system</div>
+        <div class="comp-cell yes">✓ Included</div>
+        <div class="comp-cell yes-b">✓ Included</div>
+
+        <div class="comp-cell feat">10 fully built databases</div>
+        <div class="comp-cell yes">✓ Included</div>
+        <div class="comp-cell yes-b">✓ Included</div>
+
+        <div class="comp-cell feat">Templates Vault</div>
+        <div class="comp-cell yes">✓ Included</div>
+        <div class="comp-cell yes-b">✓ Included</div>
+
+        <div class="comp-cell feat">Daily tasks for 90 days</div>
+        <div class="comp-cell no">✕ Self-directed</div>
+        <div class="comp-cell yes-b">✓ Included</div>
+
+        <div class="comp-cell feat">Personal daily check-ins</div>
+        <div class="comp-cell no">✕ Self-directed</div>
+        <div class="comp-cell yes-b">✓ Included</div>
+
+        <div class="comp-cell feat">Weekly reviews</div>
+        <div class="comp-cell no">✕ Self-directed</div>
+        <div class="comp-cell yes-b">✓ Included</div>
+
+        <div class="comp-cell feat">Ongoing support</div>
+        <div class="comp-cell no">✕ Self-directed</div>
+        <div class="comp-cell yes-b">✓ Included</div>
+
+        <div class="comp-cell feat">Price</div>
+        <div class="comp-cell price-a">$15, one time payment</div>
+        <div class="comp-cell price-b">$45, or $15/mo for 3 months</div>
+
       </div>
-      <div class="comp-header col-b">
-        <p class="comp-tag-sm" style="color: rgba(255,255,255,0.55);">For People Who Need Accountability, Structure, and Ongoing Support</p>
-        <p class="comp-name" style="color: var(--white);">The First Yes Program</p>
-        <p class="comp-price-sm" style="color: var(--accent-light);">$75</p>
-      </div>
-
-      <div class="comp-cell feat">Complete operating system</div>
-      <div class="comp-cell yes">✓ Included</div>
-      <div class="comp-cell yes-b">✓ Included</div>
-
-      <div class="comp-cell feat">10 fully built databases</div>
-      <div class="comp-cell yes">✓ Included</div>
-      <div class="comp-cell yes-b">✓ Included</div>
-
-      <div class="comp-cell feat">Templates Vault</div>
-      <div class="comp-cell yes">✓ Included</div>
-      <div class="comp-cell yes-b">✓ Included</div>
-
-      <div class="comp-cell feat">Daily tasks for 90 days</div>
-      <div class="comp-cell no">✕ Self-directed</div>
-      <div class="comp-cell yes-b">✓ Included</div>
-
-      <div class="comp-cell feat">Personal daily check-ins</div>
-      <div class="comp-cell no">✕ Self-directed</div>
-      <div class="comp-cell yes-b">✓ Included</div>
-
-      <div class="comp-cell feat">Weekly reviews</div>
-      <div class="comp-cell no">✕ Self-directed</div>
-      <div class="comp-cell yes-b">✓ Included</div>
-
-      <div class="comp-cell feat">Ongoing support</div>
-      <div class="comp-cell no">✕ Self-directed</div>
-      <div class="comp-cell yes-b">✓ Included</div>
-
-      <div class="comp-cell feat">Price</div>
-      <div class="comp-cell price-a">$27, one time payment</div>
-      <div class="comp-cell price-b">$75, full program</div>
-
-    </div>
-  </div>
-</section>
-
     </div>
   </div>
 </section>
@@ -544,7 +601,7 @@
         <p class="who-label yes">This is for you if:</p>
         <ul class="who-list">
           <li>You want to work remotely and build income on your own terms</li>
-          <li>You're a VA or freelancer who hasn't landed a paying client yet</li>
+          <li>You're a VA or remote job seeker who hasn't gotten a job for months</li>
           <li>You're tired of your 9-5 and ready to do something about it</li>
           <li>You have a skill but no idea how to turn it into income</li>
           <li>You're willing to show up consistently even when progress feels slow</li>
@@ -561,6 +618,9 @@
           <li>You're not willing to commit at least 1 to 2 hours a day</li>
         </ul>
       </div>
+      <div class="who-image">
+        <img src="images/optionb.jpeg" alt="Woman working confidently and consistently toward her goals">
+      </div>
     </div>
   </div>
 </section>
@@ -574,7 +634,7 @@
     <p class="final-body">You can continue waiting for someone to hire you, or you can learn how to create opportunities for yourself. The first option depends on other people's decisions. The other puts you back in control.</p>
     <p class="final-body">The choice is yours.</p>
     <div class="final-buttons">
-      <a href="https://selar.com/8407577grg" target="_blank" class="btn-final-orange">Get The Freelance Operating System</a>
+      <a href="https://selar.com/8407577grg" target="_blank" class="btn-final-orange">Get The Client Radar</a>
       <a href="https://docs.google.com/presentation/d/1xNGNPeyY5qatb7_sakJYXSJ14taX8Q7od8o6yv9xFBg/edit?usp=drivesdk" target="_blank" class="btn-white">Learn more about the 90-Day Program</a>
     </div>
     <p><a href="https://selar.com/4591a5w61n" target="_blank" class="btn-secondary-final">Already decided? Join the program here →</a></p>
