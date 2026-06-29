@@ -1,0 +1,76 @@
+<div style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+  <div>
+    <label style="font-size: 14px; color: var(--color-text-secondary); display: block; margin-bottom: 8px;">What monthly income do you want to earn?</label>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <input type="range" min="100" max="5000" step="50" value="900" id="income" style="flex: 1;" />
+      <span style="font-size: 15px; font-weight: 500; min-width: 80px; text-align: right;" id="income-out">$900</span>
+    </div>
+  </div>
+
+  <div>
+    <label style="font-size: 14px; color: var(--color-text-secondary); display: block; margin-bottom: 8px;">How many clients do you realistically want?</label>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <input type="range" min="1" max="10" step="1" value="3" id="clients" style="flex: 1;" />
+      <span style="font-size: 15px; font-weight: 500; min-width: 80px; text-align: right;" id="clients-out">3</span>
+    </div>
+  </div>
+
+  <div>
+    <label style="font-size: 14px; color: var(--color-text-secondary); display: block; margin-bottom: 8px;">Hours per week per client</label>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <input type="range" min="1" max="20" step="1" value="5" id="hours" style="flex: 1;" />
+      <span style="font-size: 15px; font-weight: 500; min-width: 80px; text-align: right;" id="hours-out">5</span>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 0.5rem;">
+    <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem;">
+      <p style="font-size: 13px; color: var(--color-text-secondary); margin: 0 0 4px;">Per client per month</p>
+      <p style="font-size: 22px; font-weight: 500; margin: 0;" id="per-client">$300</p>
+    </div>
+    <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem;">
+      <p style="font-size: 13px; color: var(--color-text-secondary); margin: 0 0 4px;">Your hourly rate</p>
+      <p style="font-size: 22px; font-weight: 500; margin: 0;" id="hourly">$15</p>
+    </div>
+    <div style="background: var(--color-background-info); border-radius: var(--border-radius-md); padding: 1rem;">
+      <p style="font-size: 13px; color: var(--color-text-info); margin: 0 0 4px;">Total monthly hours</p>
+      <p style="font-size: 22px; font-weight: 500; margin: 0; color: var(--color-text-info);" id="total-hours">15 hrs/wk</p>
+    </div>
+  </div>
+
+  <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; padding-top: 0.5rem; border-top: 0.5px solid var(--color-border-tertiary);">
+    This is your starting point, not a rule. Adjust the sliders as your skill, niche, and confidence grow.
+  </div>
+
+</div>
+
+<script>
+function format(n) {
+  return '$' + Math.round(n).toLocaleString();
+}
+
+function update() {
+  const income = parseInt(document.getElementById('income').value);
+  const clients = parseInt(document.getElementById('clients').value);
+  const hours = parseInt(document.getElementById('hours').value);
+
+  document.getElementById('income-out').textContent = format(income);
+  document.getElementById('clients-out').textContent = clients;
+  document.getElementById('hours-out').textContent = hours;
+
+  const perClient = income / clients;
+  const totalWeeklyHours = hours * clients;
+  const monthlyHours = totalWeeklyHours * 4.33;
+  const hourlyRate = monthlyHours > 0 ? income / monthlyHours : 0;
+
+  document.getElementById('per-client').textContent = format(perClient) + '/mo';
+  document.getElementById('hourly').textContent = format(hourlyRate) + '/hr';
+  document.getElementById('total-hours').textContent = Math.round(totalWeeklyHours) + ' hrs/wk';
+}
+
+document.getElementById('income').addEventListener('input', update);
+document.getElementById('clients').addEventListener('input', update);
+document.getElementById('hours').addEventListener('input', update);
+update();
+</script>
